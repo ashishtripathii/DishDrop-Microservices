@@ -58,9 +58,14 @@ const AddRestaurant = ({ fetchMyRestaurant }: props) => {
       setPhone("");
       setImage(null);
     } catch (error) {
-      toast.error(
-        error.response?.data?.message || "An error occurred while submitting.",
-      );
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message ||
+            "An error occurred while submitting.",
+        );
+      } else {
+        toast.error("An error occurred while submitting.");
+      }
     } finally {
       setSubmitting(false);
     }

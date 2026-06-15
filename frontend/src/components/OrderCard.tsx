@@ -51,8 +51,9 @@ const OrderCard = ({ order, onStatusUpdate }: props) => {
       );
       toast.success(data.message);
       onStatusUpdate?.();
-    } catch (error) {
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }

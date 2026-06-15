@@ -139,10 +139,11 @@ const RiderDashBoard = () => {
 
       setCurrentOrder(data.order);
     } catch (error) {
-      console.log(
-        "Fetch current order error:",
-        error?.response?.data || error.message,
-      );
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
       setCurrentOrder(null);
     }
   };
@@ -166,7 +167,7 @@ const RiderDashBoard = () => {
         await axios.patch(
           `${riderService}/api/rider/toggle`,
           {
-            isAvailable: !profile.isAvailable,
+            isAvailable: !profile?.isAvailable,
             longitude: pos.coords.longitude,
             latitude: pos.coords.latitude,
           },
@@ -181,7 +182,11 @@ const RiderDashBoard = () => {
         );
         fetchProfile();
       } catch (error) {
-        toast.error(error.response.data.message);
+        if (axios.isAxiosError(error)) {
+          toast.error(error.response?.data?.message || error.message);
+        } else {
+          toast.error("Something went wrong");
+        }
       } finally {
         setToggling(false);
       }
@@ -222,7 +227,11 @@ const RiderDashBoard = () => {
           toast.success(data.message || "");
           fetchProfile();
         } catch (error) {
-          toast.error(error.response.data.message);
+          if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data?.message || error.message);
+          } else {
+            toast.error("Something went wrong");
+          }
         } finally {
           setLoading(false);
           setSubmitting(false);
@@ -230,7 +239,11 @@ const RiderDashBoard = () => {
       });
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 

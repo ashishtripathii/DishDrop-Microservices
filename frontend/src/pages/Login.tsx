@@ -12,11 +12,11 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUser, setIsAuth } = useAppData();
 
-  const responseGoogle = async (authResult) => {
+  const responseGoogle = async (authResult: { code: string }) => {
     setLoading(true);
     try {
       const result = await axios.post(`${authService}/api/auth/login`, {
-        code: authResult["code"],
+        code: authResult.code,
       });
       if (result.data?.token) {
         localStorage.setItem("token", result.data.token);

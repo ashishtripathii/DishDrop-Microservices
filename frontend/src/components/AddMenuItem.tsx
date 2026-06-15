@@ -49,9 +49,13 @@ const AddMenuItem = ({ onItemAdded }: { onItemAdded: () => void }) => {
       resetForm();
       onItemAdded();
     } catch (error) {
-      const msg = error?.response?.data?.message || "Failed to add Item";
-      console.error(msg);
-      toast.error(msg);
+      if (axios.isAxiosError(error)) {
+        const msg = error.response?.data?.message || "Failed to add Item";
+
+        toast.error(msg);
+      } else {
+        toast.error("Failed to add Item");
+      }
     } finally {
       setLoading(false);
     }

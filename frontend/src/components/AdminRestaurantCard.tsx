@@ -24,8 +24,9 @@ const AdminRestaurantCard = ({
 
       toast.success("Restaurant verified");
       onVerify();
-    } catch (error) {
-      toast.error("failed to verify  restaurant", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     }
   };
 

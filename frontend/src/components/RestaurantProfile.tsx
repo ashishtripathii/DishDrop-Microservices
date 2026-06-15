@@ -33,9 +33,12 @@ const RestaurantProfile = ({ restaurant, isSeller, onUpdate }: props) => {
       );
       toast.success(data.message);
       setIsOpen(data.restaurant.isOpen);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const message = error?.response?.data?.message || "Something went wrong";
+
+      console.error(message);
+      toast.error(message);
     }
   };
 
@@ -57,8 +60,10 @@ const RestaurantProfile = ({ restaurant, isSeller, onUpdate }: props) => {
       toast.success(data.message);
       onUpdate(data.restaurant);
       setEditMode(false);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       const message = error?.response?.data?.message || "Something went wrong";
+
       console.error(message);
       toast.error(message);
     } finally {

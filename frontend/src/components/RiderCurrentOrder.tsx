@@ -23,8 +23,9 @@ const RiderCurrentOrder = ({ order, onStatusUpdate }: props) => {
 
       toast.success("Order status updated");
       onStatusUpdate();
-    } catch (error) {
-      toast.error(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     }
   };
 

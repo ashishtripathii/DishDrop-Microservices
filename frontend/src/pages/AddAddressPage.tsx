@@ -21,7 +21,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-
 interface Address {
   _id: string;
   formattedAddress: string;
@@ -152,7 +151,8 @@ const AddAddressPage = () => {
       setLatitude(null);
       setLongitude(null);
       fetchAddresses();
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed");
     } finally {
       setAdding(false);

@@ -1,0 +1,10 @@
+https://dishdrop-auth-service.onrender.com=AUTH_SERVICE
+https://dishdrop-admin-service-1.onrender.com=ADMIN_SERVICE
+
+https://dishdrop-realtime-service.onrender.com-REALTIME_SERVICE
+
+https://dishdrop-restaurant-service.onrender.com-RESTAURANT_SERVICE
+
+https://dishdrop-utils-service-1.onrender.com-UTILS_SERVICE
+
+https://dishdrop-rider-service.onrender.com-RIDER_SERVICE

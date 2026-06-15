@@ -32,8 +32,9 @@ const Admin = () => {
       );
       setRestaurants(data.restaurants);
       setRiders(response.riders);
-    } catch (error) {
-      console.log(error.response.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }

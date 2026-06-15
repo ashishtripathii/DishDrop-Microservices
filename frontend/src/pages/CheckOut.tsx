@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 import type { ICart, IMenuItem, IRestaurant } from "../types/types";
 import toast from "react-hot-toast";
 import { BiCreditCard, BiLoader } from "react-icons/bi";
-import { loadStripe } from "@stripe/stripe-js";
 
 interface IAddress {
   _id: string;
   formattedAddress: string;
   mobile: number;
+}
+
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
 }
 
 const CheckOut = () => {
@@ -25,7 +30,7 @@ const CheckOut = () => {
   const [loadingStripe, setLoadingStripe] = useState(false);
   const [creatingOrder, setCreatingOrder] = useState(false);
   const navigate = useNavigate();
-  const restaurant = cart[0]?.restaurantId as IRestaurant;
+  const restaurant = cart?.[0]?.restaurantId as IRestaurant;
 
   const deliveryFee = subTotal < 250 ? 49 : 0;
   const platformFee = 7;
@@ -82,7 +87,7 @@ const CheckOut = () => {
         name: "DishDrop", //your business name
         description: "Food Delivery in 5 minutes",
         order_id: razorpayOrderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        handler: async (response) => {
+        handler: async (response: RazorpayResponse) => {
           try {
             await axios.post(`${utilsService}/api/payment/verify`, {
               razorpay_order_id: response.razorpay_order_id,
@@ -114,8 +119,6 @@ const CheckOut = () => {
     }
   };
 
-  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
   const payWithStripe = async () => {
     try {
       setLoadingStripe(true);
@@ -123,8 +126,6 @@ const CheckOut = () => {
       if (!order) return;
 
       const { orderId } = order;
-
-      const stripe = await stripePromise;
 
       const { data } = await axios.post(
         `${utilsService}/api/payment/stripe/create`,

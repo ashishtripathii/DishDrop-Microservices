@@ -46,8 +46,13 @@ const RestaurantUserPage = () => {
       setMenuItems(data.items ?? null);
       console.log(data.items);
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+        toast.error(error.message);
+      } else {
+        console.log("Unknown error");
+        toast.error("Something went wrong");
+      }
     }
   };
 

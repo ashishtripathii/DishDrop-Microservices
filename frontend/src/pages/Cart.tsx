@@ -15,7 +15,7 @@ const Cart = () => {
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [clearingCart, setClearingCart] = useState(false);
 
-  const restaurant = cart[0]?.restaurantId as IRestaurant;
+  const restaurant = cart?.[0]?.restaurantId as IRestaurant;
   const deliveryFee = subTotal < 250 ? 49 : 0;
   const paltformFee = 7;
   const grandTotal = subTotal + deliveryFee + paltformFee;
@@ -35,7 +35,8 @@ const Cart = () => {
 
       await fetchCart();
     } catch (error) {
-      toast.error("Some thing went wrong", error);
+      toast.error("Some thing went wrong");
+      console.log(error);
     } finally {
       setLoadingItemId(null);
     }
@@ -56,7 +57,8 @@ const Cart = () => {
 
       await fetchCart();
     } catch (error) {
-      toast.error("Some thing went wrong", error);
+      toast.error("Some thing went wrong");
+      console.log(error);
     } finally {
       setLoadingItemId(null);
     }
@@ -79,7 +81,8 @@ const Cart = () => {
 
       await fetchCart();
     } catch (error) {
-      toast.error("Some thing went wrong", error);
+      toast.error("Some thing went wrong");
+      console.log(error);
     } finally {
       setClearingCart(false);
     }
